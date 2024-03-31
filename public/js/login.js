@@ -1,3 +1,4 @@
+console.log("Login file linked")
 const loginFormHandler = async (event) => {
     event.preventDefault();
 
