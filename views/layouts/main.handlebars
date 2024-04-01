@@ -8,7 +8,13 @@
   <body>
     <header>
       <a href="/">Back To HOme</a>
+      {{#if logged_in}}
+        <button>Logout.</button>
+        <script src="/js/logout.js"></script>
+      {{else}}
       <a href="/login">LOgin Page</a>
+      <a href="/signup">Signup Page</a>
+      {{/if}}
     </header>
     <main>
       {{{body}}}
