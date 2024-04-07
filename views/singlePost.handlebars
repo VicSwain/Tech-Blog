@@ -5,3 +5,12 @@
 <h2>{{comment.content}}</h2>\
 <p>By {{comment.user.username}}</p>
 {{/each}}
+
+{{#if logged_in}}
+ <form class="form comment-form">
+      <div class="form-group">
+        <label for="new-comment">Add Comment:</label>
+        <input class="form-input" type="text" id="new-comment" />
+      </div>
+ </form>
+{{/if}}
