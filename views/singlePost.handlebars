@@ -1,0 +1,7 @@
+<h1>Single Blog Link </h1>
+<h1>{{post.title}}</h1>
+
+{{#each post.comments as |comment|}}
+<h2>{{comment.content}}</h2>\
+<p>By {{comment.user.username}}</p>
+{{/each}}

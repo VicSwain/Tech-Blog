@@ -1,10 +1,8 @@
 const router = require('express').Router();
 const userRoutes = require('./userRoutes');
-router.use((req,res, next) => {
-    console.log("+++++++++++++==+++++++++++= NEW API ROUTE HIT++=++++++==++++++=+=+=++++++++++++")
-    next()
-})
-
+const postRoutes = require('./postRoutes');
+//res.json()
 router.use('/users', userRoutes);
+router.use('/posts', postRoutes);
 
 module.exports = router;
