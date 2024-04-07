@@ -1,6 +1,6 @@
 console.log("singup")
 
-document.body.innerHTML += "<h1>Confirming the link</h1>"
+// document.body.innerHTML += "<h1>Confirming the link</h1>" leaving for later test notation
 const signupFormHandler = async (event) => {
     event.preventDefault();
   
