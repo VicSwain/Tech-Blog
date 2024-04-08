@@ -1,16 +1,24 @@
+<div class="container">
 <h1>Single Blog Link </h1>
 <h1>{{post.title}}</h1>
-
+{{#if logged_in}}
+<h1>{{post.user.username}}</h1>
+<h1>{{post.content}}</h1>
+</div>
+<div class="container">
 {{#each post.comments as |comment|}}
-<h2>{{comment.content}}</h2>\
-<p>By {{comment.user.username}}</p>
+<h2>{{comment.content}}</h2>
+<p>By {{comment.user.username}} created on {{format_date comment.created_on}}</p>
 {{/each}}
 
-{{#if logged_in}}
+
  <form class="form comment-form">
       <div class="form-group">
         <label for="new-comment">Add Comment:</label>
         <input class="form-input" type="text" id="new-comment" />
+        <button type="submit">Add Comment</button>
       </div>
  </form>
 {{/if}}
+</div>
+<script src="/js/addComment.js"></script>

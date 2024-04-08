@@ -1,5 +1,12 @@
 <h1>User Profile Page</h1>
+{{!-- all posts from users with an update and delete button --}}
+{{#each userPosts.posts as |post|}}
+{{post.id}}
+{{post.tile}}
+{{post.content}}
+{{format_date post.created_on}}
+{{/each}}
 
-<form>
-    
-</form>
+<a href="/newPost">Create New Post </a>
+
+
