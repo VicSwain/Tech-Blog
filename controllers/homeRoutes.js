@@ -7,19 +7,19 @@ const { User, Comment, Post } = require("../models");
 //req working
 router.get("/", async (req, res) => {
   try {
-    const blogData = await Post.findAll({
+    const postData = await Post.findAll({
       // look in pgAdmin at erd of db
       include: [
         { model: Comment, include: { model: User, attributes: ["username"] } },
         { model: User, attributes: ["username"] },
       ],
     });
-    const blogs = blogData.map(blog => blog.get({plain:true}))
+    const posts = postData.map(post => post.get({plain:true}))
     console.log("=========================================")
-    console.log(blogs)
+    console.log(posts)
     console.log("=========================================")
 
-    res.render("homepage", {blogs: blogs, logged_in: req.session.logged_in});
+    res.render("homepage", {posts: posts, logged_in: req.session.logged_in});
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
@@ -37,6 +37,7 @@ console.log(postData);
     const post = postData.get({plain: true})
     console.log("_+__________________________")
     console.log(post)
+    console.log(post.user.user);
     res.render("singlePost", {post, logged_in: req.session.logged_in});
 })
 
@@ -64,5 +65,7 @@ router.get('/login', async (req,res) => {
 router.get("/profile", async (req,res) => {
     res.render("profile", { logged_in: req.session.logged_in })
 })
+
+
 
 module.exports = router;
