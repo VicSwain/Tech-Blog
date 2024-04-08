@@ -8,7 +8,7 @@
 <div class="container">
 {{#each post.comments as |comment|}}
 <h2>{{comment.content}}</h2>
-<p>By {{comment.user.username}}</p>
+<p>By {{comment.user.username}} created on {{format_date comment.created_on}}</p>
 {{/each}}
 
 

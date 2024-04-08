@@ -1,4 +1,4 @@
-const newPostFormHandler = async (event) => {
+const newCommentFormHandler = async (event) => {
   event.preventDefault();
   const postID = window.location.pathname.split("/").pop();
   const content = document.querySelector("#new-comment").value.trim();
@@ -18,4 +18,4 @@ const newPostFormHandler = async (event) => {
   }
 };
 
-document.querySelector('.comment-form').addEventListener('submit', newPostFormHandler);
+document.querySelector('.comment-form').addEventListener('submit', newCommentFormHandler);
