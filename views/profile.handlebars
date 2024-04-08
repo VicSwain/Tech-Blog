@@ -1,12 +1,29 @@
+<div class="container">
 <h1>User Profile Page</h1>
+</div>
 {{!-- all posts from users with an update and delete button --}}
-{{#each userPosts.posts as |post|}}
-{{post.id}}
-{{post.tile}}
-{{post.content}}
-{{format_date post.created_on}}
+{{#each userPosts.posts as |post|}} <br>
+<div class="card">
+<a href="/post/{{post.id}}">
+<div class="card card-header">
+<h2>{{post.title}}</h2> <br>
+</a>
+</div>
+<div class="card card-body">
+<h3>{{post.content}} </h3> <br>
+</div>
+{{#each post.comments as |comment|}}
+<div class="card card-footer"></div>
+<h4>Comments: {{comment.content}}</h4>
+<p>By {{comment.user.username}} created on {{format_date comment.created_on}}</p>
+</div>
 {{/each}}
-
+</div>
+{{/each}} <br>
+<div class="container">
 <a href="/newPost">Create New Post </a>
 
+</div>
 
+
+<a href="/update/{{post.id}}">Update your Post</a>

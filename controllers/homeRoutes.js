@@ -7,17 +7,17 @@ const withAuth = require('../utils/auth');
 //req working
 router.get("/", async (req, res) => {
   try {
-    const postData = await Post.findAll({
+    const userPostData = await Post.findAll({
       // look in pgAdmin at erd of db
       include: [
         { model: Comment, include: { model: User, attributes: ["username"] } },
         { model: User, attributes: ["username"] },
       ],
     });
-    const posts = postData.map(post => post.get({plain:true}))
-    console.log("=========================================")
-    console.log(posts)
-    console.log("=========================================")
+    const posts = userPostData.map(post => post.get({plain:true}))
+    // console.log("=========================================")
+    // console.log(posts)
+    // console.log("=========================================")
 
     res.render("homepage", {posts: posts, logged_in: req.session.logged_in});
   } catch (err) {
@@ -27,18 +27,26 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/post/:id", async (req,res) => {
-    const postData = await Post.findByPk(req.params.id, {      include: [
+    const userPostData = await Post.findByPk(req.params.id, {      include: [
         { model: Comment, include: { model: User, attributes: ["username"] } },
-        { model: User, attributes: ["username"] },
+        { model: User, attributes: ["username"] }, 
       ],
       
 })
-console.log(postData);
-    const post = postData.get({plain: true})
-    console.log("_+__________________________")
-    console.log(post)
-    console.log(post.user.user);
-    res.render("singlePost", {post, logged_in: req.session.logged_in});
+
+    const post = userPostData.get({plain: true})
+    console.log(post);
+    console.log(post.user_id);
+    console.log(req.session.user_id);
+    let postIsUser;
+    if(post.user_id === req.session.user_id) {
+       postIsUser = true;
+    } else {
+       postIsUser = false;
+    }
+    console.log(postIsUser);
+    res.render("singlePost", {post, postIsUser, logged_in: req.session.logged_in});
+    
 })
 
 router.get("/signup", async (req, res) => {
@@ -50,7 +58,7 @@ router.get('/login', async (req,res) => {
       // If the user is already logged in, redirect the request to another route
  try {
       if (req.session.logged_in) {
-        console.log(req.session.user_id);
+        // console.log(req.session.user_id);
     res.redirect('/profile');
     return;
   }
@@ -71,16 +79,23 @@ router.get("/profile", withAuth, async (req, res) => {
           include: [
             {
               model: Comment,
+              include: [
+                {
+                  model: User,
+                  attributes: ['username']
+                }
+              ]
             }
           ]
         }
       ]
     });
-    
+
     const userPosts = userData.get({ plain: true});
+    console.log(userPosts.posts[0].comments);
     // Render the profile template after fetching data
     res.render("profile", { logged_in: req.session.logged_in, userPosts });
-    console.log(userPosts);
+    // console.log(userData);
   } catch (error) {
     // Handle errors appropriately
     console.error(error);
@@ -93,6 +108,16 @@ router.get('/newPost', async (req, res) => {
     logged_in : req.session.logged_in
   });
 })
+
+router.get('/update/:id', async (req,res)=> {
+  const updateData = await Post.findByPk(req.params.id, {
+    include: {model: Comment}
+  });
+  const post = updateData.get({plain: true });
+  console.log(post);
+  res.render('update', {post, id: req.params.id, logged_in: req.session.logged_in, user_id: req.session.user_id});
+})
+
 
 
 

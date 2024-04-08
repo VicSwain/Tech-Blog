@@ -1,14 +1,19 @@
-<div class="container">
-<h1>Single Blog Link </h1>
-<h1>{{post.title}}</h1>
-{{#if logged_in}}
-<h1>{{post.user.username}}</h1>
-<h1>{{post.content}}</h1>
+<div class="card">
+
+<div class="card card-header">
+<h1> Blog title: {{post.title}}</h1>
 </div>
-<div class="container">
+<div class="card card-body">
+{{#if logged_in}}
+<h2>Posted by {{post.user.username}}</h2>
+<h3>{{post.content}}</h3>
+</div>
+
 {{#each post.comments as |comment|}}
-<h2>{{comment.content}}</h2>
+<div class="card card-footer"></div>
+<h4>Comments: {{comment.content}}</h4>
 <p>By {{comment.user.username}} created on {{format_date comment.created_on}}</p>
+</div>
 {{/each}}
 
 
@@ -19,6 +24,8 @@
         <button type="submit">Add Comment</button>
       </div>
  </form>
-{{/if}}
-</div>
+ {{#if postIsUser}}
+ <a href="/update/{{post.id}}">Update or Delete Your Post</a>
+ {{/if}}
+ {{/if}}
 <script src="/js/addComment.js"></script>
