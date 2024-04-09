@@ -92,7 +92,7 @@ router.get("/profile", withAuth, async (req, res) => {
     });
 
     const userPosts = userData.get({ plain: true});
-    console.log(userPosts.posts[0].comments);
+    // console.log(userPosts.posts[0].comments);
     // Render the profile template after fetching data
     res.render("profile", { logged_in: req.session.logged_in, userPosts });
     // console.log(userData);
