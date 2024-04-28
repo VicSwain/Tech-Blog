@@ -1,4 +1,3 @@
-// this has everything the miniproject does
 
 const Sequelize = require('sequelize');
 require('dotenv').config();
